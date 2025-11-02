@@ -1,4 +1,4 @@
-# Buildint the project 
+# Building the project 
 
 ```
 mkdir -p build
