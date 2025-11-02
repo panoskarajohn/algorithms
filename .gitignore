@@ -13,6 +13,10 @@ CTestTestfile.cmake
 DartConfiguration.tcl
 *_include.cmake
 Makefile
+algorithms
+algorithms[1]_tests.cmake
+algorithms[2]_tests.cmake
+libsrc_algos.a
 
 # CLion specific
 .idea/
