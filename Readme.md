@@ -1,3 +1,8 @@
+# Disclaimer
+
+All the below have been tested on macos and are not expected to support work on any
+other os. Cmake being cmake it's expected to work maybe with some small modifications.
+
 # Building the project 
 
 ```
@@ -41,8 +46,9 @@ run --gtest_filter="ContainsDuplicates.*
 process launch -- '--gtest_filter=ContainsDuplicates.*'
 ```
 
-# TODO VSCODE Debugging
-WIP: Currently not working
+# VSCODE Debugging
+
+Tested for macos with lldb
 
 
 Nvim guide
