@@ -8,5 +8,5 @@ TEST(ContainsDuplicates, VeryBasic) {
 
   const std::vector<int> nums2 = {2, 1, 2};
   bool contains2 = containsNearbyDupicates(nums2, 1);
-  EXPECT_TRUE(contains);
+  EXPECT_FALSE(contains2);
 }

@@ -13,7 +13,7 @@ bool containsNearbyDupicates(const std::vector<int> &nums, int k) {
 
     if (it != map.end()) {
       const int keyFound = it->first;
-      const int indexFound = it->first;
+      const int indexFound = it->second;
 
       if (i - indexFound <= k) {
         return true;
