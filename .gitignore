@@ -1,0 +1,32 @@
+# Build directories
+/build/
+/cmake-build-debug/
+/bin/
+/lib/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+CTestTestfile.cmake
+DartConfiguration.tcl
+*_include.cmake
+Makefile
+
+# CLion specific
+.idea/
+*.iml
+*.iws
+cmake-build-*/
+
+# macOS system files
+.DS_Store
+
+# Dependencies
+_deps/
+
+# Temporary files
+*.swp
+*.swo
+*~
