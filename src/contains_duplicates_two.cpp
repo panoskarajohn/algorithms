@@ -17,6 +17,8 @@ bool containsNearbyDupicates(const std::vector<int> &nums, int k) {
 
       if (i - indexFound <= k) {
         return true;
+      } else {
+        map[nums[i]] = i;
       }
     }
 

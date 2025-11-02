@@ -33,8 +33,16 @@ Then run lldb:
 cd build
 cd bin
 lldb ./algorithms
-run --gtest_filter="LinkedListTests.*
+
+// Not gonna work
+run --gtest_filter="ContainsDuplicates.*
+
+// do it with
+process launch -- '--gtest_filter=ContainsDuplicates.*'
 ```
+
+# TODO VSCODE Debugging
+WIP: Currently not working
 
 
 Nvim guide
