@@ -5,6 +5,8 @@
 /lib/
 
 # CMake generated files
+compile_commands.json
+/.cache/
 CMakeCache.txt
 CMakeFiles/
 CMakeScripts/

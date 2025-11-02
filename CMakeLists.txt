@@ -15,8 +15,25 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+# --- Output directories ---
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# --- Generate compile_commands.json ---
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# Symlink compile_commands.json to root
+if(NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E create_symlink
+                ${CMAKE_BINARY_DIR}/compile_commands.json
+                ${CMAKE_SOURCE_DIR}/compile_commands.json
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+endif()
+
 # --- Library ---
-file(GLOB SRC_FILES src/*.cpp)
+file(GLOB SRC_FILES src/*.cpp ds/*.cpp)
 add_library(src_algos ${SRC_FILES})
 target_include_directories(src_algos PUBLIC include)
 
@@ -33,3 +50,6 @@ gtest_discover_tests(algorithms)
 # --- GoogleTest integration ---
 include(GoogleTest)
 gtest_discover_tests(algorithms)
+
+# --- Optional: export compile commands for editor integration ---
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
