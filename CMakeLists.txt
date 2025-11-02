@@ -35,7 +35,7 @@ endif()
 # --- Library ---
 file(GLOB SRC_FILES src/*.cpp ds/*.cpp)
 add_library(src_algos ${SRC_FILES})
-target_include_directories(src_algos PUBLIC include)
+target_include_directories(src_algos PUBLIC include ds)
 
 # --- Tests ---
 file(GLOB TEST_SOURCES tests/test_*.cpp)
