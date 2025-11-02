@@ -12,6 +12,7 @@ cmake_install.cmake
 CTestTestfile.cmake
 DartConfiguration.tcl
 *_include.cmake
+*.cmake
 Makefile
 algorithms
 algorithms[1]_tests.cmake
