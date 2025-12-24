@@ -18,3 +18,13 @@ TEST(RemoveDuplicates, VeryBasic) {
     EXPECT_EQ(expected2, result2);
     ASSERT_EQ(nums2, resultVector2);
 }
+
+TEST(RemoveDuplicatesTwo, VeryBasic) {
+    std::vector<int> nums = {1, 1, 1, 2, 2, 3};
+    int result = removeDuplicatesTwo(nums);
+    std::vector<int> resultVector = {1, 1, 2, 2, 3};
+    int expected = 5;
+
+    EXPECT_EQ(expected, result);
+    ASSERT_EQ(nums, resultVector);
+}
