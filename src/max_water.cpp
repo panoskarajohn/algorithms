@@ -26,7 +26,6 @@ int maxWater(std::vector<int> heights) {
     return result;
 }
 
-// TODO: There is a two pointer solution to this...
 int trapWater(std::vector<int> heights) {
     int n = heights.size();
     std::unordered_map<int, int> maxLeftHeight;
@@ -50,6 +49,30 @@ int trapWater(std::vector<int> heights) {
         int currentTrappedWater = mixOfMax - current;
         if (currentTrappedWater > 0) {
             sum += currentTrappedWater;
+        }
+    }
+
+    return sum;
+}
+
+int trapWaterTwoPointers(std::vector<int> heights) {
+    int n = heights.size();
+    int sum = 0;
+
+    int left = 0;
+    int right = n - 1;
+    int maxLeft = heights[left];
+    int maxRight = heights[right];
+
+    while (left != right) {
+        if (maxLeft < maxRight) {
+            left++;
+            maxLeft = std::max(maxLeft, heights[left]);
+            sum += maxLeft - heights[left];
+        } else {
+            right--;
+            maxRight = std::max(maxRight, heights[right]);
+            sum += maxRight - heights[right];
         }
     }
 

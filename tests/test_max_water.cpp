@@ -20,3 +20,11 @@ TEST(TrapWater, VeryBasic) {
     int result = trapWater(nums);
     ASSERT_EQ(result, expected);
 }
+
+TEST(TrapWaterTwoPtr, VeryBasic) {
+    std::vector<int> nums = {0, 2, 0, 3, 1, 0, 1, 3, 2, 1};
+    int expected = 9;
+
+    int result = trapWaterTwoPointers(nums);
+    ASSERT_EQ(result, expected);
+}
