@@ -12,3 +12,11 @@ TEST(MaxWater, VeryBasic) {
     int expected2 = 4;
     EXPECT_EQ(result2, expected2);
 }
+
+TEST(TrapWater, VeryBasic) {
+    std::vector<int> nums = {0, 2, 0, 3, 1, 0, 1, 3, 2, 1};
+    int expected = 9;
+
+    int result = trapWater(nums);
+    ASSERT_EQ(result, expected);
+}
