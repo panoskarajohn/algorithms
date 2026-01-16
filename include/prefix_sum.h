@@ -10,3 +10,12 @@ class NumArray {
     int *prefixSumArray;
     int prefixSumArraySize;
 };
+
+class NumMatrix {
+  public:
+    NumMatrix(const std::vector<std::vector<int>> &nums);
+    int sumRegion(int row1, int col1, int row2, int col2);
+
+  private:
+    std::vector<std::vector<int>> matrix;
+};
