@@ -89,3 +89,17 @@ TEST(RangeQueryMatrix, VeryBasic2) {
     // Test 2x3 subregion
     EXPECT_EQ(nm.sumRegion(0, 0, 1, 2), 18); // top 2 rows
 }
+
+TEST(PivotIndex, VeryBasic) {
+    std::vector<int> nums = {1, 7, 3, 6, 5, 6};
+    EXPECT_EQ(pivotIndex(nums), 3);
+
+    nums = {1, 2, 3};
+    EXPECT_EQ(pivotIndex(nums), -1);
+
+    nums = {10};
+    EXPECT_EQ(pivotIndex(nums), 0);
+
+    nums = {2, 1, -1};
+    EXPECT_EQ(pivotIndex(nums), 0);
+}

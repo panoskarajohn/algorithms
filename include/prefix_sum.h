@@ -19,3 +19,5 @@ class NumMatrix {
   private:
     std::vector<std::vector<int>> matrix;
 };
+
+int pivotIndex(std::vector<int> &nums);
