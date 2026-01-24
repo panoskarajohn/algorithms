@@ -61,24 +61,19 @@ int NumMatrix::sumRegion(int row1, int col1, int row2, int col2) {
 
 int pivotIndex(std::vector<int> &nums) {
     int n = nums.size();
-    std::vector<int> left_sum(n);
-    std::vector<int> right_sum(n);
-
-    int left = 0;
-    int right = 0;
-
-    for (int i = 0; i < n; i++) {
-        left = i - 1 >= 0 ? left_sum[i - 1] : 0;
-        left_sum[i] = left + nums[i];
-
-        right = n - i < n ? right_sum[n - i] : 0;
-        right_sum[n - i - 1] = right + nums[n - i - 1];
+    int total = 0;
+    for (int num : nums) {
+        total += num;
     }
 
+    int leftSum = 0;
     for (int i = 0; i < n; i++) {
-        if (left_sum[i] == right_sum[i]) {
+        int rightSum = total - leftSum - nums[i];
+        if (leftSum == rightSum) {
             return i;
         }
+
+        leftSum += nums[i];
     }
 
     return -1;
