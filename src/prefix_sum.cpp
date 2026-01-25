@@ -78,3 +78,29 @@ int pivotIndex(std::vector<int> &nums) {
 
     return -1;
 }
+
+std::vector<int> productExceptSelf(const std::vector<int> &nums) {
+    int n = nums.size();
+    std::vector<int> result(n);
+    std::vector<int> left(n);
+    std::vector<int> right(n);
+
+    int left_product = 1;
+    int right_product = 1;
+
+    for (int i = 0; i < n; i++) {
+        left_product *= nums[i];
+        right_product *= nums[n - i - 1];
+
+        left[i] = left_product;
+        right[n - i - 1] = right_product;
+    }
+
+    for (int i = 0; i < n; i++) {
+        int prev = i - 1 >= 0 ? left[i - 1] : 1;
+        int next = i + 1 < n ? right[i + 1] : 1;
+        result[i] = prev * next;
+    }
+
+    return result;
+}

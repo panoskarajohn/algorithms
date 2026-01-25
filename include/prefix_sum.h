@@ -21,3 +21,5 @@ class NumMatrix {
 };
 
 int pivotIndex(std::vector<int> &nums);
+
+std::vector<int> productExceptSelf(const std::vector<int> &nums);

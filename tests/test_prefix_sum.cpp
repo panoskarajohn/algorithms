@@ -103,3 +103,17 @@ TEST(PivotIndex, VeryBasic) {
     nums = {2, 1, -1};
     EXPECT_EQ(pivotIndex(nums), 0);
 }
+
+TEST(ProductExceptSelf, VeryBasic) {
+    std::vector<int> nums = {1, 2, 3, 4};
+    std::vector<int> expected = {24, 12, 8, 6};
+    EXPECT_EQ(productExceptSelf(nums), expected);
+
+    nums = {0, 1, 2, 3};
+    expected = {6, 0, 0, 0};
+    EXPECT_EQ(productExceptSelf(nums), expected);
+
+    nums = {2, 3};
+    expected = {3, 2};
+    EXPECT_EQ(productExceptSelf(nums), expected);
+}
