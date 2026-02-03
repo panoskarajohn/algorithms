@@ -81,25 +81,43 @@ int pivotIndex(std::vector<int> &nums) {
 
 std::vector<int> productExceptSelf(const std::vector<int> &nums) {
     int n = nums.size();
-    std::vector<int> result(n);
-    std::vector<int> left(n);
-    std::vector<int> right(n);
+    std::vector<int> result(n, 1);
 
     int left_product = 1;
     int right_product = 1;
 
     for (int i = 0; i < n; i++) {
+        result[i] *= left_product;
         left_product *= nums[i];
-        right_product *= nums[n - i - 1];
-
-        left[i] = left_product;
-        right[n - i - 1] = right_product;
     }
 
+    for (int i = n - 1; i >= 0; i--) {
+        result[i] *= right_product;
+        right_product *= nums[i];
+    }
+
+    return result;
+}
+
+int subarraySum(std::vector<int> &nums, int k) {
+    int n = nums.size();
+    std::unordered_map<int, int> prefix_map{{0, 1}};
+    int currentSum = 0;
+    int result = 0;
+
     for (int i = 0; i < n; i++) {
-        int prev = i - 1 >= 0 ? left[i - 1] : 1;
-        int next = i + 1 < n ? right[i + 1] : 1;
-        result[i] = prev * next;
+        currentSum += nums[i];
+        int diff = currentSum - k;
+        int add = 0;
+        auto iterator = prefix_map.find(diff);
+
+        if (iterator != prefix_map.end()) {
+            add += iterator->second;
+        }
+
+        result += add;
+        auto [it, inserted] = prefix_map.try_emplace(currentSum, 0);
+        it->second++;
     }
 
     return result;

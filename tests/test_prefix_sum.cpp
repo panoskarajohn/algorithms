@@ -117,3 +117,17 @@ TEST(ProductExceptSelf, VeryBasic) {
     expected = {3, 2};
     EXPECT_EQ(productExceptSelf(nums), expected);
 }
+
+TEST(SubarraySumEqualsK, VeryBasic) {
+    std::vector<int> nums = {1, 1, 1};
+    EXPECT_EQ(subarraySum(nums, 2), 2);
+
+    nums = {1, 2, 3};
+    EXPECT_EQ(subarraySum(nums, 3), 2);
+
+    nums = {0, 0, 0};
+    EXPECT_EQ(subarraySum(nums, 0), 6);
+
+    nums = {-1, -1, 1};
+    EXPECT_EQ(subarraySum(nums, 0), 1);
+}
