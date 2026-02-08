@@ -72,3 +72,35 @@ TEST(MiddleOfLinkedList, VeryBasic) {
         EXPECT_EQ(mid->data, 8);
     }
 }
+
+TEST(MaxTwinSum, VeryBasic) {
+    {
+        std::shared_ptr<Node<int>> head = nullptr;
+        EXPECT_EQ(maxTwinSum(head), 0);
+    }
+
+    {
+        LinkedList<int> list;
+        list.append(5);
+        list.append(4);
+        list.append(2);
+        list.append(1);
+        EXPECT_EQ(maxTwinSum(list.head), 6);
+    }
+
+    {
+        LinkedList<int> list;
+        list.append(4);
+        list.append(2);
+        list.append(2);
+        list.append(3);
+        EXPECT_EQ(maxTwinSum(list.head), 7);
+    }
+
+    {
+        LinkedList<int> list;
+        list.append(1);
+        list.append(100000);
+        EXPECT_EQ(maxTwinSum(list.head), 100001);
+    }
+}

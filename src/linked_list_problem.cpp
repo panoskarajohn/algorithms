@@ -1,4 +1,5 @@
 #include "linked_list_problem.h"
+#include <stack>
 
 std::shared_ptr<Node<int>> middleNode(const std::shared_ptr<Node<int>> &head) {
     if (head == nullptr) {
@@ -13,4 +14,29 @@ std::shared_ptr<Node<int>> middleNode(const std::shared_ptr<Node<int>> &head) {
     }
 
     return slow;
+}
+
+int maxTwinSum(const std::shared_ptr<Node<int>> &head) {
+    std::stack<std::shared_ptr<Node<int>>> stack;
+
+    auto temp = head;
+    while (temp != nullptr) {
+        stack.push(temp);
+        temp = temp->next;
+    }
+
+    int n = stack.size();
+    int i = 0;
+    int max = 0;
+    temp = head;
+
+    while (i != n / 2 && temp != nullptr) {
+        int value = temp->data;
+        auto popped = stack.top()->data;
+        stack.pop();
+        max = std::max(value + popped, max);
+        temp = temp->next;
+    }
+
+    return max;
 }
