@@ -1,7 +1,3 @@
 #include "linked_list_problem.h"
 
-std::shared_ptr<Node<int>> middleNode(const std::shared_ptr<Node<int>> &head) {
-    (void)head;
-    // TODO: implement
-    return nullptr;
-}
+std::shared_ptr<Node<int>> middleNode(const std::shared_ptr<Node<int>> &head) { return nullptr; }
