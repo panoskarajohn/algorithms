@@ -13,3 +13,6 @@ std::shared_ptr<Node<int>> middleNode(const std::shared_ptr<Node<int>> &head);
 // and the i-th node from the end.
 // If the list is empty, return 0.
 int maxTwinSum(const std::shared_ptr<Node<int>> &head);
+
+// Returns true if a singly linked list contains a cycle, otherwise false.
+bool hasCycle(const std::shared_ptr<Node<int>> &head);
