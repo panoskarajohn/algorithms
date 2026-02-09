@@ -36,6 +36,7 @@ int maxTwinSum(const std::shared_ptr<Node<int>> &head) {
         stack.pop();
         max = std::max(value + popped, max);
         temp = temp->next;
+        i++;
     }
 
     return max;
