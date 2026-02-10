@@ -1,4 +1,5 @@
 #include "linked_list_problem.h"
+#include <map>
 #include <stack>
 #include <stdexcept>
 
@@ -61,4 +62,29 @@ bool hasCycle(const std::shared_ptr<Node<int>> &head) {
     }
 
     return false;
+}
+
+std::shared_ptr<Node<int>> detectCycle(const std::shared_ptr<Node<int>> &head) {
+    if (head == nullptr) {
+        return nullptr;
+    }
+
+    auto slow = head;
+    auto fast = head;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast) {
+            // cycle detected
+            slow = head;
+            while (slow != fast) {
+                slow = slow->next;
+                fast = fast->next;
+            }
+            return slow;
+        }
+    }
+    return nullptr;
 }

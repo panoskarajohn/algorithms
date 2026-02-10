@@ -16,3 +16,7 @@ int maxTwinSum(const std::shared_ptr<Node<int>> &head);
 
 // Returns true if a singly linked list contains a cycle, otherwise false.
 bool hasCycle(const std::shared_ptr<Node<int>> &head);
+
+// Returns the node where a cycle begins.
+// If there is no cycle, return nullptr.
+std::shared_ptr<Node<int>> detectCycle(const std::shared_ptr<Node<int>> &head);

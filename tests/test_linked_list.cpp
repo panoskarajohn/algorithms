@@ -165,3 +165,80 @@ TEST(LinkedListCycleDetection, VeryBasic) {
         EXPECT_TRUE(hasCycle(n1));
     }
 }
+
+TEST(LinkedListCycle2, VeryBasic) {
+    {
+        std::shared_ptr<Node<int>> head = nullptr;
+        EXPECT_EQ(detectCycle(head), nullptr);
+    }
+
+    {
+        auto head = std::make_shared<Node<int>>(1);
+        EXPECT_EQ(detectCycle(head), nullptr);
+    }
+
+    {
+        auto head = std::make_shared<Node<int>>(1);
+        head->next = head;
+        EXPECT_EQ(detectCycle(head), head);
+    }
+
+    {
+        auto n1 = std::make_shared<Node<int>>(1);
+        auto n2 = std::make_shared<Node<int>>(2);
+        auto n3 = std::make_shared<Node<int>>(3);
+        auto n4 = std::make_shared<Node<int>>(4);
+
+        n1->next = n2;
+        n2->next = n3;
+        n3->next = n4;
+
+        EXPECT_EQ(detectCycle(n1), nullptr);
+    }
+
+    {
+        auto n1 = std::make_shared<Node<int>>(10);
+        auto n2 = std::make_shared<Node<int>>(20);
+        auto n3 = std::make_shared<Node<int>>(30);
+        auto n4 = std::make_shared<Node<int>>(40);
+
+        n1->next = n2;
+        n2->next = n3;
+        n3->next = n4;
+        n4->next = n1;
+
+        EXPECT_EQ(detectCycle(n1), n1);
+    }
+
+    {
+        auto n1 = std::make_shared<Node<int>>(5);
+        auto n2 = std::make_shared<Node<int>>(6);
+        auto n3 = std::make_shared<Node<int>>(7);
+        auto n4 = std::make_shared<Node<int>>(8);
+        auto n5 = std::make_shared<Node<int>>(9);
+
+        n1->next = n2;
+        n2->next = n3;
+        n3->next = n4;
+        n4->next = n5;
+        n5->next = n3;
+
+        EXPECT_EQ(detectCycle(n1), n3);
+    }
+
+    {
+        auto n1 = std::make_shared<Node<int>>(1);
+        auto n2 = std::make_shared<Node<int>>(2);
+        auto n3 = std::make_shared<Node<int>>(3);
+        auto n4 = std::make_shared<Node<int>>(4);
+        auto n5 = std::make_shared<Node<int>>(5);
+
+        n1->next = n2;
+        n2->next = n3;
+        n3->next = n4;
+        n4->next = n5;
+        n5->next = n2;
+
+        EXPECT_EQ(detectCycle(n1), n2);
+    }
+}
