@@ -10,6 +10,7 @@ class PrefixTree {
 
     void insert(const std::string &word);
     bool startsWith(const std::string &prefix) const;
+    bool search(const std::string &word) const;
 
   private:
     struct Node;

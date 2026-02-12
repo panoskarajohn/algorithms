@@ -12,13 +12,40 @@ struct PrefixTree::Node {
 PrefixTree::PrefixTree() : root(std::make_unique<Node>()) {}
 
 void PrefixTree::insert(const std::string &word) {
-    (void)word;
-    throw std::logic_error("PrefixTree::insert is not implemented");
+    PrefixTree::Node *current = root.get();
+    for (auto c : word) {
+        int index = c - 'a'; // make sure we only pass lowercase chars
+        if (!current->children[index]) {
+            current->children[index] = std::make_unique<PrefixTree::Node>();
+        }
+
+        current = current->children[index].get();
+    }
+    current->isTerminal = true;
 }
 
 bool PrefixTree::startsWith(const std::string &prefix) const {
-    (void)prefix;
-    throw std::logic_error("PrefixTree::startsWith is not implemented");
+    PrefixTree::Node *current = root.get();
+    for (const auto c : prefix) {
+        int index = c - 'a';
+        if (!current->children[index]) {
+            return false;
+        }
+        current = current->children[index].get();
+    }
+    return true;
+}
+
+bool PrefixTree::search(const std::string &word) const {
+    PrefixTree::Node *current = root.get();
+    for (const auto c : word) {
+        int index = c - 'a';
+        if (!current->children[index]) {
+            return false;
+        }
+        current = current->children[index].get();
+    }
+    return current->isTerminal;
 }
 
 PrefixTree::~PrefixTree() {}
