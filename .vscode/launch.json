@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/algorithms",
             "args": [
-                "--gtest_filter=ContainsDuplicates.*"
+                "--gtest_filter=FindDuplicateNumber.VeryBasic"
             ],
             "cwd": "${workspaceFolder}/build/bin",
             "internalConsoleOptions": "openOnSessionStart",

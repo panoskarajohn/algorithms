@@ -46,11 +46,3 @@ target_link_libraries(algorithms PRIVATE src_algos GTest::gtest_main)
 # --- Discover tests ---
 include(GoogleTest)
 gtest_discover_tests(algorithms)
-
-
-# --- GoogleTest integration ---
-include(GoogleTest)
-gtest_discover_tests(algorithms)
-
-# --- Optional: export compile commands for editor integration ---
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
