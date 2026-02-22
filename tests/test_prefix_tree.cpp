@@ -1,4 +1,5 @@
 #include "PrefixTree.h"
+#include "WordDictionary.h"
 
 #include <gtest/gtest.h>
 
@@ -75,5 +76,71 @@ TEST(PrefixTree, VeryBasic) {
         EXPECT_FALSE(tree.search("do"));
         EXPECT_FALSE(tree.search("cats"));
         EXPECT_FALSE(tree.search("cow"));
+    }
+}
+
+TEST(WordDictionary, DISABLED_NeetCodeDesignAddAndSearchWordDataStructure) {
+    {
+        WordDictionary dictionary;
+        dictionary.addWord("bad");
+        dictionary.addWord("dad");
+        dictionary.addWord("mad");
+
+        EXPECT_FALSE(dictionary.search("pad"));
+        EXPECT_TRUE(dictionary.search("bad"));
+        EXPECT_TRUE(dictionary.search(".ad"));
+        EXPECT_TRUE(dictionary.search("b.."));
+    }
+
+    {
+        WordDictionary dictionary;
+        dictionary.addWord("at");
+        dictionary.addWord("and");
+        dictionary.addWord("an");
+        dictionary.addWord("add");
+
+        EXPECT_TRUE(dictionary.search("an"));
+        EXPECT_TRUE(dictionary.search("a."));
+        EXPECT_TRUE(dictionary.search("a.d"));
+        EXPECT_TRUE(dictionary.search("..d"));
+        EXPECT_FALSE(dictionary.search("a"));
+        EXPECT_FALSE(dictionary.search("."));
+        EXPECT_FALSE(dictionary.search("...d"));
+    }
+
+    {
+        WordDictionary dictionary;
+        dictionary.addWord("a");
+        dictionary.addWord("ab");
+        dictionary.addWord("abc");
+        dictionary.addWord("abcd");
+
+        EXPECT_TRUE(dictionary.search("a"));
+        EXPECT_TRUE(dictionary.search("."));
+        EXPECT_TRUE(dictionary.search("ab"));
+        EXPECT_TRUE(dictionary.search("a."));
+        EXPECT_TRUE(dictionary.search(".."));
+        EXPECT_TRUE(dictionary.search("abc"));
+        EXPECT_TRUE(dictionary.search("..."));
+        EXPECT_TRUE(dictionary.search("...."));
+
+        EXPECT_FALSE(dictionary.search("....."));
+        EXPECT_FALSE(dictionary.search("b"));
+        EXPECT_FALSE(dictionary.search(".a"));
+    }
+
+    {
+        WordDictionary dictionary;
+        dictionary.addWord("cat");
+        dictionary.addWord("cap");
+        dictionary.addWord("can");
+        dictionary.addWord("dog");
+
+        EXPECT_TRUE(dictionary.search("ca."));
+        EXPECT_TRUE(dictionary.search("c.t"));
+        EXPECT_TRUE(dictionary.search("d.g"));
+        EXPECT_FALSE(dictionary.search("c..t"));
+        EXPECT_FALSE(dictionary.search(".."));
+        EXPECT_FALSE(dictionary.search("...s"));
     }
 }
