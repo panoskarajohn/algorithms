@@ -1,5 +1,4 @@
 #include "find_duplicate_number.h"
-#include <stdexcept>
 
 int findDuplicate(std::vector<int> &nums) {
     for (int i = 0; i < nums.size(); i++) {

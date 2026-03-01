@@ -79,17 +79,17 @@ TEST(PrefixTree, VeryBasic) {
     }
 }
 
-TEST(WordDictionary, DISABLED_NeetCodeDesignAddAndSearchWordDataStructure) {
+TEST(WordDictionary, VeryBasic) {
     {
         WordDictionary dictionary;
         dictionary.addWord("bad");
         dictionary.addWord("dad");
         dictionary.addWord("mad");
 
-        EXPECT_FALSE(dictionary.search("pad"));
-        EXPECT_TRUE(dictionary.search("bad"));
-        EXPECT_TRUE(dictionary.search(".ad"));
-        EXPECT_TRUE(dictionary.search("b.."));
+        ASSERT_FALSE(dictionary.search("pad"));
+        ASSERT_TRUE(dictionary.search("bad"));
+        ASSERT_TRUE(dictionary.search(".ad"));
+        ASSERT_TRUE(dictionary.search("b.."));
     }
 
     {
@@ -99,13 +99,13 @@ TEST(WordDictionary, DISABLED_NeetCodeDesignAddAndSearchWordDataStructure) {
         dictionary.addWord("an");
         dictionary.addWord("add");
 
-        EXPECT_TRUE(dictionary.search("an"));
-        EXPECT_TRUE(dictionary.search("a."));
-        EXPECT_TRUE(dictionary.search("a.d"));
-        EXPECT_TRUE(dictionary.search("..d"));
-        EXPECT_FALSE(dictionary.search("a"));
-        EXPECT_FALSE(dictionary.search("."));
-        EXPECT_FALSE(dictionary.search("...d"));
+        ASSERT_TRUE(dictionary.search("an"));
+        ASSERT_TRUE(dictionary.search("a."));
+        ASSERT_TRUE(dictionary.search("a.d"));
+        ASSERT_TRUE(dictionary.search("..d"));
+        ASSERT_FALSE(dictionary.search("a"));
+        ASSERT_FALSE(dictionary.search("."));
+        ASSERT_FALSE(dictionary.search("...d"));
     }
 
     {
@@ -115,18 +115,18 @@ TEST(WordDictionary, DISABLED_NeetCodeDesignAddAndSearchWordDataStructure) {
         dictionary.addWord("abc");
         dictionary.addWord("abcd");
 
-        EXPECT_TRUE(dictionary.search("a"));
-        EXPECT_TRUE(dictionary.search("."));
-        EXPECT_TRUE(dictionary.search("ab"));
-        EXPECT_TRUE(dictionary.search("a."));
-        EXPECT_TRUE(dictionary.search(".."));
-        EXPECT_TRUE(dictionary.search("abc"));
-        EXPECT_TRUE(dictionary.search("..."));
-        EXPECT_TRUE(dictionary.search("...."));
+        ASSERT_TRUE(dictionary.search("a"));
+        ASSERT_TRUE(dictionary.search("."));
+        ASSERT_TRUE(dictionary.search("ab"));
+        ASSERT_TRUE(dictionary.search("a."));
+        ASSERT_TRUE(dictionary.search(".."));
+        ASSERT_TRUE(dictionary.search("abc"));
+        ASSERT_TRUE(dictionary.search("..."));
+        ASSERT_TRUE(dictionary.search("...."));
 
-        EXPECT_FALSE(dictionary.search("....."));
-        EXPECT_FALSE(dictionary.search("b"));
-        EXPECT_FALSE(dictionary.search(".a"));
+        ASSERT_FALSE(dictionary.search("....."));
+        ASSERT_FALSE(dictionary.search("b"));
+        ASSERT_FALSE(dictionary.search(".a"));
     }
 
     {
@@ -136,11 +136,11 @@ TEST(WordDictionary, DISABLED_NeetCodeDesignAddAndSearchWordDataStructure) {
         dictionary.addWord("can");
         dictionary.addWord("dog");
 
-        EXPECT_TRUE(dictionary.search("ca."));
-        EXPECT_TRUE(dictionary.search("c.t"));
-        EXPECT_TRUE(dictionary.search("d.g"));
-        EXPECT_FALSE(dictionary.search("c..t"));
-        EXPECT_FALSE(dictionary.search(".."));
-        EXPECT_FALSE(dictionary.search("...s"));
+        ASSERT_TRUE(dictionary.search("ca."));
+        ASSERT_TRUE(dictionary.search("c.t"));
+        ASSERT_TRUE(dictionary.search("d.g"));
+        ASSERT_FALSE(dictionary.search("c..t"));
+        ASSERT_FALSE(dictionary.search(".."));
+        ASSERT_FALSE(dictionary.search("...s"));
     }
 }

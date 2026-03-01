@@ -7,7 +7,20 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/algorithms",
             "args": [
-                "--gtest_filter=FindDuplicateNumber.VeryBasic"
+                "--gtest_filter=WordDictionary.VeryBasic"
+            ],
+            "cwd": "${workspaceFolder}/build/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "initCommands": [],
+            "preLaunchTask": "Build Debug Target"
+        },
+        {
+            "name": "Debug nvim algorithms tests (LLDB)",
+            "type": "codelldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/algorithms",
+            "args": [
+                "--gtest_filter=WordDictionary.VeryBasic"
             ],
             "cwd": "${workspaceFolder}/build/bin",
             "internalConsoleOptions": "openOnSessionStart",
