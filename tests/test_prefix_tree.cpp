@@ -80,16 +80,22 @@ TEST(PrefixTree, VeryBasic) {
 }
 
 TEST(WordDictionary, VeryBasic) {
+    const auto expectSearch = [](const WordDictionary &dictionary, const std::string &word,
+                                 bool expected) {
+        ASSERT_EQ(dictionary.search(word), expected);
+        ASSERT_EQ(dictionary.searchIterative(word), expected);
+    };
+
     {
         WordDictionary dictionary;
         dictionary.addWord("bad");
         dictionary.addWord("dad");
         dictionary.addWord("mad");
 
-        ASSERT_FALSE(dictionary.search("pad"));
-        ASSERT_TRUE(dictionary.search("bad"));
-        ASSERT_TRUE(dictionary.search(".ad"));
-        ASSERT_TRUE(dictionary.search("b.."));
+        expectSearch(dictionary, "pad", false);
+        expectSearch(dictionary, "bad", true);
+        expectSearch(dictionary, ".ad", true);
+        expectSearch(dictionary, "b..", true);
     }
 
     {
@@ -99,13 +105,13 @@ TEST(WordDictionary, VeryBasic) {
         dictionary.addWord("an");
         dictionary.addWord("add");
 
-        ASSERT_TRUE(dictionary.search("an"));
-        ASSERT_TRUE(dictionary.search("a."));
-        ASSERT_TRUE(dictionary.search("a.d"));
-        ASSERT_TRUE(dictionary.search("..d"));
-        ASSERT_FALSE(dictionary.search("a"));
-        ASSERT_FALSE(dictionary.search("."));
-        ASSERT_FALSE(dictionary.search("...d"));
+        expectSearch(dictionary, "an", true);
+        expectSearch(dictionary, "a.", true);
+        expectSearch(dictionary, "a.d", true);
+        expectSearch(dictionary, "..d", true);
+        expectSearch(dictionary, "a", false);
+        expectSearch(dictionary, ".", false);
+        expectSearch(dictionary, "...d", false);
     }
 
     {
@@ -115,18 +121,18 @@ TEST(WordDictionary, VeryBasic) {
         dictionary.addWord("abc");
         dictionary.addWord("abcd");
 
-        ASSERT_TRUE(dictionary.search("a"));
-        ASSERT_TRUE(dictionary.search("."));
-        ASSERT_TRUE(dictionary.search("ab"));
-        ASSERT_TRUE(dictionary.search("a."));
-        ASSERT_TRUE(dictionary.search(".."));
-        ASSERT_TRUE(dictionary.search("abc"));
-        ASSERT_TRUE(dictionary.search("..."));
-        ASSERT_TRUE(dictionary.search("...."));
+        expectSearch(dictionary, "a", true);
+        expectSearch(dictionary, ".", true);
+        expectSearch(dictionary, "ab", true);
+        expectSearch(dictionary, "a.", true);
+        expectSearch(dictionary, "..", true);
+        expectSearch(dictionary, "abc", true);
+        expectSearch(dictionary, "...", true);
+        expectSearch(dictionary, "....", true);
 
-        ASSERT_FALSE(dictionary.search("....."));
-        ASSERT_FALSE(dictionary.search("b"));
-        ASSERT_FALSE(dictionary.search(".a"));
+        expectSearch(dictionary, ".....", false);
+        expectSearch(dictionary, "b", false);
+        expectSearch(dictionary, ".a", false);
     }
 
     {
@@ -136,11 +142,11 @@ TEST(WordDictionary, VeryBasic) {
         dictionary.addWord("can");
         dictionary.addWord("dog");
 
-        ASSERT_TRUE(dictionary.search("ca."));
-        ASSERT_TRUE(dictionary.search("c.t"));
-        ASSERT_TRUE(dictionary.search("d.g"));
-        ASSERT_FALSE(dictionary.search("c..t"));
-        ASSERT_FALSE(dictionary.search(".."));
-        ASSERT_FALSE(dictionary.search("...s"));
+        expectSearch(dictionary, "ca.", true);
+        expectSearch(dictionary, "c.t", true);
+        expectSearch(dictionary, "d.g", true);
+        expectSearch(dictionary, "c..t", false);
+        expectSearch(dictionary, "..", false);
+        expectSearch(dictionary, "...s", false);
     }
 }
