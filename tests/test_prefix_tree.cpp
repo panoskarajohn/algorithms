@@ -1,7 +1,10 @@
 #include "PrefixTree.h"
 #include "WordDictionary.h"
+#include "prefix_tree_problems.h"
 
 #include <gtest/gtest.h>
+
+#include <algorithm>
 
 TEST(PrefixTree, VeryBasic) {
     {
@@ -148,5 +151,56 @@ TEST(WordDictionary, VeryBasic) {
         expectSearch(dictionary, "c..t", false);
         expectSearch(dictionary, "..", false);
         expectSearch(dictionary, "...s", false);
+    }
+}
+
+TEST(WordSearch2, VeryBasic) {
+    const auto expectFindWords = [](std::vector<std::vector<char>> board,
+                                    std::vector<std::string> words,
+                                    std::vector<std::string> expected) {
+        auto result = findWords(board, words);
+        std::sort(result.begin(), result.end());
+        std::sort(expected.begin(), expected.end());
+        ASSERT_EQ(result, expected);
+    };
+
+    {
+        std::vector<std::vector<char>> board = {
+            {'o', 'a', 'a', 'n'},
+            {'e', 't', 'a', 'e'},
+            {'i', 'h', 'k', 'r'},
+            {'i', 'f', 'l', 'v'},
+        };
+        std::vector<std::string> words = {"oath", "pea", "eat", "rain"};
+        expectFindWords(board, words, {"eat", "oath"});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {{'a', 'b'}, {'c', 'd'}};
+        std::vector<std::string> words = {"abcb"};
+        expectFindWords(board, words, {});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {{'a', 'a'}};
+        std::vector<std::string> words = {"a", "aa", "aaa"};
+        expectFindWords(board, words, {"a", "aa"});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {{'a'}};
+        std::vector<std::string> words = {"a", "b"};
+        expectFindWords(board, words, {"a"});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {
+            {'a', 'b', 'c'},
+            {'a', 'e', 'd'},
+            {'a', 'f', 'g'},
+        };
+        std::vector<std::string> words = {"abcdefg", "gfedcbaaa", "eaabcdgfa",
+                                          "befa",    "dgc",       "ade"};
+        expectFindWords(board, words, {"abcdefg", "befa", "eaabcdgfa", "gfedcbaaa"});
     }
 }
