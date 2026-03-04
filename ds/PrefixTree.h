@@ -1,7 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 class PrefixTree {
@@ -17,4 +19,6 @@ class PrefixTree {
   private:
     struct Node;
     std::unique_ptr<Node> root;
+    void checkPosition(std::set<std::pair<int, int>> &visited, std::vector<std::string> &result,
+                       const std::vector<std::vector<char>> &board, int x, int y);
 };

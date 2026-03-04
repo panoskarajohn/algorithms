@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/algorithms",
             "args": [
-                "--gtest_filter=WordDictionary.VeryBasic"
+                "--gtest_filter=WordSearch2.VeryBasic"
             ],
             "cwd": "${workspaceFolder}/build/bin",
             "internalConsoleOptions": "openOnSessionStart",
@@ -20,7 +20,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/algorithms",
             "args": [
-                "--gtest_filter=WordDictionary.VeryBasic"
+                "--gtest_filter=WordSearch2.VeryBasic"
             ],
             "cwd": "${workspaceFolder}/build/bin",
             "internalConsoleOptions": "openOnSessionStart",

@@ -1,46 +1,27 @@
 #include "PrefixTree.h"
 #include <array>
+#include <stack>
+#include <utility>
 
-std::vector<char> getMatrixBoardNeighbors(int posX, int posY,
-                                          const std::vector<std::vector<char>> &board) {
+std::vector<std::pair<int, int>> getPositions(const std::vector<std::vector<char>> &board, int posY,
+                                              int posX) {
+    std::vector<std::pair<int, int>> result{};
     int height = board.size();
     int width = board[0].size();
-    auto result = std::vector<char>{};
+    const std::vector<std::pair<int, int>> directions{
+        {-1, 0}, // up
+        {1, 0},  // down
+        {0, 1},  // right
+        {0, -1}  // left
+    };
 
-    if (posX >= width || posX < 0) {
-        throw std::invalid_argument("out of range posX");
-    }
+    for (const auto &[dy, dx] : directions) {
+        int newY = posY - dy;
+        int newX = posX - dx;
 
-    if (posY >= height || posY < 0) {
-        throw std::invalid_argument("out of range posY");
-    }
-
-    int topX = posX;
-    int topY = posY--;
-
-    if (topY > 0) {
-        result.push_back(board[topY][topX]);
-    }
-
-    int leftX = posX--;
-    int leftY = posY;
-
-    if (leftX > 0) {
-        result.push_back(board[leftY][leftX]);
-    }
-
-    int rightX = posX++;
-    int rightY = posY;
-
-    if (rightX < width) {
-        result.push_back(board[rightY][rightX]);
-    }
-
-    int bottomX = posX;
-    int bottomY = posY++;
-
-    if (bottomY < height) {
-        result.push_back(board[bottomY][bottomX]);
+        if (newY >= 0 && newY < height && newX >= 0 && newX < width) {
+            result.emplace_back(newY, newX);
+        }
     }
 
     return result;
@@ -92,13 +73,59 @@ bool PrefixTree::search(const std::string &word) const {
 
 std::vector<std::string>
 PrefixTree::searchWordsInBoard(const std::vector<std::vector<char>> &board) {
-    std::vector<std::string> result = {};
-    // we have already setup our words in the trie
-    // we should dfs the board and check our trie if it contains the word
-    // this would be easier recursive but let's try to do it iterative
+    std::vector<std::string> result{};
+    std::set<std::pair<int, int>> visited{};
 
-    // we need a visited so we don't iterate forever...?
+    int height = board.size();
+    int width = board[0].size();
+
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            checkPosition(visited, result, board, row, col);
+        }
+    }
+
     return result;
+}
+
+void PrefixTree::checkPosition(std::set<std::pair<int, int>> &visited,
+                               std::vector<std::string> &result,
+                               const std::vector<std::vector<char>> &board, int row, int col) {
+    Node *current = root.get();
+    std::set<std::pair<int, int>> localVisited{};
+    std::stack<std::pair<int, int>> stack{};
+    stack.push({row, col});
+    std::string s;
+    s.reserve(100); // good size for most of the leetcode cases
+
+    while (!stack.empty()) {
+        auto [currentRow, currentCol] = stack.top();
+        stack.pop();
+
+        if (visited.contains({currentRow, currentCol})) {
+            continue;
+        }
+
+        char currentChar = board[currentRow][currentCol];
+        int index = currentChar - 'a';
+
+        if (!current->children[index]) {
+            continue;
+        }
+
+        localVisited.insert({currentRow, currentCol});
+        s += currentChar;
+
+        current = current->children[index].get();
+        if (current->isTerminal) {
+            visited.insert(localVisited.begin(), localVisited.end());
+            result.emplace_back(s);
+        }
+        // push to the stack
+        for (auto [posRow, posCol] : getPositions(board, currentRow, currentCol)) {
+            stack.push({posRow, posCol});
+        }
+    }
 }
 
 PrefixTree::~PrefixTree() {}
