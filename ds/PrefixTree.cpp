@@ -1,31 +1,6 @@
 #include "PrefixTree.h"
 #include <array>
-#include <stack>
 #include <utility>
-
-std::vector<std::pair<int, int>> getPositions(const std::vector<std::vector<char>> &board, int posY,
-                                              int posX) {
-    std::vector<std::pair<int, int>> result{};
-    int height = board.size();
-    int width = board[0].size();
-    const std::vector<std::pair<int, int>> directions{
-        {-1, 0}, // up
-        {1, 0},  // down
-        {0, 1},  // right
-        {0, -1}  // left
-    };
-
-    for (const auto &[dy, dx] : directions) {
-        int newY = posY - dy;
-        int newX = posX - dx;
-
-        if (newY >= 0 && newY < height && newX >= 0 && newX < width) {
-            result.emplace_back(newY, newX);
-        }
-    }
-
-    return result;
-}
 
 struct PrefixTree::Node {
     std::array<std::unique_ptr<Node>, 26> children{};
@@ -37,7 +12,7 @@ PrefixTree::PrefixTree() : root(std::make_unique<Node>()) {}
 void PrefixTree::insert(const std::string &word) {
     PrefixTree::Node *current = root.get();
     for (auto c : word) {
-        int index = c - 'a'; // make sure we only pass lowercase chars
+        int index = c - 'a';
         if (!current->children[index]) {
             current->children[index] = std::make_unique<PrefixTree::Node>();
         }
@@ -73,59 +48,68 @@ bool PrefixTree::search(const std::string &word) const {
 
 std::vector<std::string>
 PrefixTree::searchWordsInBoard(const std::vector<std::vector<char>> &board) {
-    std::vector<std::string> result{};
-    std::set<std::pair<int, int>> visited{};
+    if (board.empty() || board[0].empty()) {
+        return {};
+    }
 
-    int height = board.size();
-    int width = board[0].size();
+    std::set<std::string> found{};
+    std::vector<std::vector<bool>> visited(board.size(), std::vector<bool>(board[0].size(), false));
+    std::string current{};
+
+    const int height = static_cast<int>(board.size());
+    const int width = static_cast<int>(board[0].size());
 
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            checkPosition(visited, result, board, row, col);
+            checkPosition(board, row, col, root.get(), visited, current, found);
         }
     }
 
-    return result;
+    return {found.begin(), found.end()};
 }
 
-void PrefixTree::checkPosition(std::set<std::pair<int, int>> &visited,
-                               std::vector<std::string> &result,
-                               const std::vector<std::vector<char>> &board, int row, int col) {
-    Node *current = root.get();
-    std::set<std::pair<int, int>> localVisited{};
-    std::stack<std::pair<int, int>> stack{};
-    stack.push({row, col});
-    std::string s;
-    s.reserve(100); // good size for most of the leetcode cases
-
-    while (!stack.empty()) {
-        auto [currentRow, currentCol] = stack.top();
-        stack.pop();
-
-        if (visited.contains({currentRow, currentCol})) {
-            continue;
-        }
-
-        char currentChar = board[currentRow][currentCol];
-        int index = currentChar - 'a';
-
-        if (!current->children[index]) {
-            continue;
-        }
-
-        localVisited.insert({currentRow, currentCol});
-        s += currentChar;
-
-        current = current->children[index].get();
-        if (current->isTerminal) {
-            visited.insert(localVisited.begin(), localVisited.end());
-            result.emplace_back(s);
-        }
-        // push to the stack
-        for (auto [posRow, posCol] : getPositions(board, currentRow, currentCol)) {
-            stack.push({posRow, posCol});
-        }
+void PrefixTree::checkPosition(const std::vector<std::vector<char>> &board, int row, int col,
+                               const Node *node, std::vector<std::vector<bool>> &visited,
+                               std::string &current, std::set<std::string> &found) const {
+    if (visited[row][col]) {
+        return;
     }
+
+    const char c = board[row][col];
+    const int index = c - 'a';
+    if (!node->children[index]) {
+        return;
+    }
+
+    const Node *next = node->children[index].get();
+    visited[row][col] = true;
+    current.push_back(c);
+
+    if (next->isTerminal) {
+        found.insert(current);
+    }
+
+    static constexpr std::array<std::pair<int, int>, 4> directions{
+        std::pair{-1, 0},
+        std::pair{1, 0},
+        std::pair{0, -1},
+        std::pair{0, 1},
+    };
+
+    const int height = static_cast<int>(board.size());
+    const int width = static_cast<int>(board[0].size());
+
+    for (const auto [dr, dc] : directions) {
+        const int nr = row + dr;
+        const int nc = col + dc;
+        if (nr < 0 || nr >= height || nc < 0 || nc >= width) {
+            continue;
+        }
+        checkPosition(board, nr, nc, next, visited, current, found);
+    }
+
+    current.pop_back();
+    visited[row][col] = false;
 }
 
 PrefixTree::~PrefixTree() {}

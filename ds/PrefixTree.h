@@ -19,6 +19,7 @@ class PrefixTree {
   private:
     struct Node;
     std::unique_ptr<Node> root;
-    void checkPosition(std::set<std::pair<int, int>> &visited, std::vector<std::string> &result,
-                       const std::vector<std::vector<char>> &board, int x, int y);
+    void checkPosition(const std::vector<std::vector<char>> &board, int row, int col,
+                       const Node *node, std::vector<std::vector<bool>> &visited,
+                       std::string &current, std::set<std::string> &found) const;
 };

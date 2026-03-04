@@ -152,6 +152,55 @@ TEST(WordDictionary, VeryBasic) {
         expectSearch(dictionary, "..", false);
         expectSearch(dictionary, "...s", false);
     }
+
+    {
+        WordDictionary dictionary;
+
+        expectSearch(dictionary, "", false);
+        expectSearch(dictionary, ".", false);
+        expectSearch(dictionary, "...", false);
+    }
+
+    {
+        WordDictionary dictionary;
+        dictionary.addWord("bad");
+        dictionary.addWord("bad");
+
+        expectSearch(dictionary, "bad", true);
+        expectSearch(dictionary, "b..", true);
+        expectSearch(dictionary, "ba", false);
+        expectSearch(dictionary, "b...", false);
+    }
+
+    {
+        WordDictionary dictionary;
+        dictionary.addWord("apple");
+        dictionary.addWord("apply");
+        dictionary.addWord("apt");
+        dictionary.addWord("maple");
+
+        expectSearch(dictionary, "app.e", true);
+        expectSearch(dictionary, "appl.", true);
+        expectSearch(dictionary, "a..le", true);
+        expectSearch(dictionary, ".....", true);
+        expectSearch(dictionary, "..p..", true);
+        expectSearch(dictionary, "....", false);
+        expectSearch(dictionary, "......", false);
+    }
+
+    {
+        WordDictionary dictionary;
+        dictionary.addWord("aa");
+        dictionary.addWord("ab");
+        dictionary.addWord("ba");
+        dictionary.addWord("bb");
+
+        expectSearch(dictionary, "..", true);
+        expectSearch(dictionary, ".a", true);
+        expectSearch(dictionary, "a.", true);
+        expectSearch(dictionary, "c.", false);
+        expectSearch(dictionary, ".c", false);
+    }
 }
 
 TEST(WordSearch2, VeryBasic) {
@@ -191,5 +240,44 @@ TEST(WordSearch2, VeryBasic) {
         std::vector<std::vector<char>> board = {{'a'}};
         std::vector<std::string> words = {"a", "b"};
         expectFindWords(board, words, {"a"});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {
+            {'a', 'b'},
+            {'c', 'd'},
+        };
+        std::vector<std::string> words = {"acdb", "abdc", "abcd", "bdca"};
+        expectFindWords(board, words, {"acdb", "abdc", "bdca"});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {
+            {'a', 'a'},
+            {'a', 'a'},
+        };
+        std::vector<std::string> words = {"a", "aa", "aaa", "aaaa", "aaaaa"};
+        expectFindWords(board, words, {"a", "aa", "aaa", "aaaa"});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {
+            {'s', 'e', 'e'},
+            {'s', 'f', 'c'},
+            {'a', 'd', 'e'},
+        };
+        std::vector<std::string> words = {"see", "se", "seed", "sef", "sfce"};
+        expectFindWords(board, words, {"see", "se", "sef", "sfce"});
+    }
+
+    {
+        std::vector<std::vector<char>> board = {
+            {'o', 'a', 'b', 'n'},
+            {'o', 't', 'a', 'e'},
+            {'a', 'h', 'k', 'r'},
+            {'a', 'f', 'l', 'v'},
+        };
+        std::vector<std::string> words = {"oa", "oaa", "oath", "oat", "eat", "rain"};
+        expectFindWords(board, words, {"oa", "oaa", "eat", "oath", "oat"});
     }
 }
