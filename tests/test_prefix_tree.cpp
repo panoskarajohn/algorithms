@@ -215,6 +215,12 @@ TEST(WordFilter, VeryBasic) {
         const int resultPrefixApp = filter.f("app", "le");
         ASSERT_EQ(resultPrefixApp, 0);
 
+        const int resultEmptyPrefix = filter.f("", "e");
+        ASSERT_EQ(resultEmptyPrefix, 0);
+
+        const int resultEmptySuffix = filter.f("app", "");
+        ASSERT_EQ(resultEmptySuffix, 0);
+
         const int resultMissingPrefix = filter.f("b", "e");
         ASSERT_EQ(resultMissingPrefix, -1);
     }
@@ -232,6 +238,9 @@ TEST(WordFilter, VeryBasic) {
         const int resultApLy = filter.f("ap", "ly");
         ASSERT_EQ(resultApLy, 1);
 
+        const int resultEmptyPrefixLe = filter.f("", "le");
+        ASSERT_EQ(resultEmptyPrefixLe, 3);
+
         const int resultNoSuffixMatch = filter.f("a", "z");
         ASSERT_EQ(resultNoSuffixMatch, -1);
     }
@@ -244,13 +253,16 @@ TEST(WordFilter, VeryBasic) {
         ASSERT_EQ(resultCaT, 2);
 
         const int resultCarR = filter.f("car", "r");
-        ASSERT_EQ(resultCarR, -1);
+        ASSERT_EQ(resultCarR, 1);
 
         const int resultDG = filter.f("d", "g");
         ASSERT_EQ(resultDG, 3);
 
         const int resultEmptyPrefixT = filter.f("", "t");
         ASSERT_EQ(resultEmptyPrefixT, 2);
+
+        const int resultPrefixCarEmptySuffix = filter.f("car", "");
+        ASSERT_EQ(resultPrefixCarEmptySuffix, 2);
 
         const int resultMissingPrefixEmptySuffix = filter.f("z", "");
         ASSERT_EQ(resultMissingPrefixEmptySuffix, -1);

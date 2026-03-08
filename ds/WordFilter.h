@@ -11,5 +11,5 @@ class WordFilter {
   private:
     struct Node;
     std::unique_ptr<Node> root;
-    int dfs(std::string suffix, int suffixIndex, Node *root);
+    int charToIndex(char c) const;
 };
