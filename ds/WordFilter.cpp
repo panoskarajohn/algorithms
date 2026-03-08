@@ -22,7 +22,7 @@ WordFilter::WordFilter(const std::vector<std::string> &words) : root(std::make_u
         }
         current->isTerminal = true;
         current->wordIndex = counter;
-        current++;
+        counter++;
     }
 }
 
@@ -33,30 +33,27 @@ int WordFilter::dfs(std::string suffix, int suffixIndex, Node *root) {
         return -1;
     }
 
-    if (suffixIndex == suffix.length()) {
+    if (suffixIndex >= suffix.length()) {
         return -1;
     }
     char currentChar = suffix[suffixIndex];
     int index = currentChar - 'a';
 
-    if (root->children[index] && root->children[index]->isTerminal &&
-        suffixIndex == suffix.length() - 1) { // we found a solution
-        return root->children[index]->wordIndex;
-    }
-
-    if (root->isTerminal) {
-        return -1;
-    }
-
     int max = -1;
     for (const auto &child : root->children) {
-        max = std::max(dfs(suffix, suffixIndex, child.get()), max);
+        int copySuffixIndex = suffixIndex;
+        max = std::max(dfs(suffix, copySuffixIndex, child.get()), max);
+        if (root->children[index]) {
+            max = std::max(dfs(suffix, ++copySuffixIndex, root->children[index].get()), max);
+        }
     }
 
-    if (root->children[index]) {
-        max = std::max(dfs(suffix, ++suffixIndex, root->children[index].get()), max);
-    }
+    if (root->children[index] && root->children[index]->isTerminal &&
+        suffixIndex == suffix.length() - 1) { // we found a solution
 
+        auto wordIndex = root->children[index]->wordIndex;
+        return std::max(wordIndex, max);
+    }
     return max;
 }
 

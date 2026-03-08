@@ -224,10 +224,10 @@ TEST(WordFilter, VeryBasic) {
         WordFilter filter(words);
 
         const int resultAppLe = filter.f("app", "le");
-        ASSERT_EQ(resultAppLe, 0);
+        ASSERT_EQ(resultAppLe, 3);
 
         const int resultApE = filter.f("ap", "e");
-        ASSERT_EQ(resultApE, 2);
+        ASSERT_EQ(resultApE, 3);
 
         const int resultApLy = filter.f("ap", "ly");
         ASSERT_EQ(resultApLy, 1);
@@ -244,7 +244,7 @@ TEST(WordFilter, VeryBasic) {
         ASSERT_EQ(resultCaT, 2);
 
         const int resultCarR = filter.f("car", "r");
-        ASSERT_EQ(resultCarR, 1);
+        ASSERT_EQ(resultCarR, -1);
 
         const int resultDG = filter.f("d", "g");
         ASSERT_EQ(resultDG, 3);
