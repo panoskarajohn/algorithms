@@ -6,6 +6,10 @@ struct WordFilter::Node {
     int maxWordIndex = -1;
 };
 
+/// @brief this will make all the possible suffixes and always the same prefix
+/// e.g apple
+/// apple{apple, pple{apple, ple{apple, le{apple, e{apple, {apple
+/// @param words
 WordFilter::WordFilter(const std::vector<std::string> &words) : root(std::make_unique<Node>()) {
     for (int wordIndex = 0; wordIndex < static_cast<int>(words.size()); ++wordIndex) {
         const std::string &word = words[wordIndex];
