@@ -1,5 +1,6 @@
 #include "PrefixTree.h"
 #include "WordDictionary.h"
+#include "WordFilter.h"
 #include "prefix_tree_problems.h"
 
 #include <gtest/gtest.h>
@@ -200,6 +201,59 @@ TEST(WordDictionary, VeryBasic) {
         expectSearch(dictionary, "a.", true);
         expectSearch(dictionary, "c.", false);
         expectSearch(dictionary, ".c", false);
+    }
+}
+
+TEST(WordFilter, VeryBasic) {
+    {
+        std::vector<std::string> words = {"apple"};
+        WordFilter filter(words);
+
+        const int resultPrefixA = filter.f("a", "e");
+        ASSERT_EQ(resultPrefixA, 0);
+
+        const int resultPrefixApp = filter.f("app", "le");
+        ASSERT_EQ(resultPrefixApp, 0);
+
+        const int resultMissingPrefix = filter.f("b", "e");
+        ASSERT_EQ(resultMissingPrefix, -1);
+    }
+
+    {
+        std::vector<std::string> words = {"apple", "apply", "ape", "apple"};
+        WordFilter filter(words);
+
+        const int resultAppLe = filter.f("app", "le");
+        ASSERT_EQ(resultAppLe, 0);
+
+        const int resultApE = filter.f("ap", "e");
+        ASSERT_EQ(resultApE, 2);
+
+        const int resultApLy = filter.f("ap", "ly");
+        ASSERT_EQ(resultApLy, 1);
+
+        const int resultNoSuffixMatch = filter.f("a", "z");
+        ASSERT_EQ(resultNoSuffixMatch, -1);
+    }
+
+    {
+        std::vector<std::string> words = {"cat", "car", "cart", "dog"};
+        WordFilter filter(words);
+
+        const int resultCaT = filter.f("ca", "t");
+        ASSERT_EQ(resultCaT, 2);
+
+        const int resultCarR = filter.f("car", "r");
+        ASSERT_EQ(resultCarR, 1);
+
+        const int resultDG = filter.f("d", "g");
+        ASSERT_EQ(resultDG, 3);
+
+        const int resultEmptyPrefixT = filter.f("", "t");
+        ASSERT_EQ(resultEmptyPrefixT, 2);
+
+        const int resultMissingPrefixEmptySuffix = filter.f("z", "");
+        ASSERT_EQ(resultMissingPrefixEmptySuffix, -1);
     }
 }
 
