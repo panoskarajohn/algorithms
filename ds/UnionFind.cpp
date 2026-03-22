@@ -1,6 +1,7 @@
 #include "UnionFind.h"
 #include <numeric>
 #include <utility>
+UnionFind::~UnionFind() {}
 
 UnionFind::UnionFind(int size) : parent(size), rank(size, 1), sizes(size, 1) {
     if (size < 0) {
