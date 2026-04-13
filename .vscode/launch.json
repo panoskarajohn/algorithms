@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/algorithms",
             "args": [
-                "--gtest_filter=WordSearch2.VeryBasic"
+                "--gtest_filter=LongestConsecutiveSequence.VeryBasic"
             ],
             "cwd": "${workspaceFolder}/build/bin",
             "internalConsoleOptions": "openOnSessionStart",
@@ -20,7 +20,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/algorithms",
             "args": [
-                "--gtest_filter=WordSearch2.VeryBasic"
+                "--gtest_filter=LongestConsecutiveSequence.VeryBasic"
             ],
             "cwd": "${workspaceFolder}/build/bin",
             "internalConsoleOptions": "openOnSessionStart",
